@@ -86,3 +86,14 @@ DETALLE: fase opcional; no requerida por la lista de chequeo
 bash scripts/verify.sh
 RESULTADO: SUCCESS
 DETALLE: 7/7 pruebas OK (Docker, Engine, imagen, contenedor, puerto, HTTP 200, modificación)
+
+[FASE 16]
+Integración de 4 capturas reales aportadas por el aprendiz
+RESULTADO: SUCCESS
+DETALLE: docker-version-info.png, docker-info-server.png, docker-desktop-containers.png, app-navegador.png
+LIBRO: documento regenerado en md/html/docx/pdf con imágenes embebidas
+
+[ENTREGA]
+Repositorio cambiado a PÚBLICO
+RESULTADO: SUCCESS
+DETALLE: https://github.com/JavierparraDev/Sena-Docker

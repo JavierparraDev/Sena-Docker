@@ -19,12 +19,11 @@
     { "id": "EVID-14", "phase": 12, "title": "Nuevo contenedor", "file": "evidencias/12-validacion/validacion-final.txt", "criterion": ["CHECK-05"], "verified": true },
     { "id": "EVID-15", "phase": 12, "title": "Aplicación modificada funcionando", "file": "evidencias/12-validacion/validacion-final.txt", "criterion": ["CHECK-05"], "verified": true },
     { "id": "EVID-16", "phase": 13, "title": "Docker Hub", "file": null, "criterion": [], "verified": false, "note": "No realizado (fase opcional)." },
-    { "id": "EVID-17", "phase": 14, "title": "Verificación final automatizada", "file": "logs/final-verification.log", "criterion": ["CHECK-01","CHECK-03","CHECK-04","CHECK-05"], "verified": true }
+    { "id": "EVID-17", "phase": 14, "title": "Verificación final automatizada", "file": "logs/final-verification.log", "criterion": ["CHECK-01","CHECK-03","CHECK-04","CHECK-05"], "verified": true },
+    { "id": "EVID-18", "phase": 2, "title": "Captura de terminal: docker --version y docker info (cliente)", "file": "evidencias/02-docker/docker-version-info.png", "criterion": ["CHECK-01","CHECK-02"], "verified": true },
+    { "id": "EVID-19", "phase": 2, "title": "Captura de terminal: docker info (servidor)", "file": "evidencias/02-docker/docker-info-server.png", "criterion": ["CHECK-01","CHECK-02"], "verified": true },
+    { "id": "EVID-20", "phase": 7, "title": "Captura Docker Desktop: contenedor getting-started en ejecución", "file": "evidencias/07-contenedor/docker-desktop-containers.png", "criterion": ["CHECK-01","CHECK-04"], "verified": true },
+    { "id": "EVID-21", "phase": 12, "title": "Captura del navegador: aplicación Todo App en localhost:3000", "file": "evidencias/12-validacion/app-navegador.png", "criterion": ["CHECK-04","CHECK-05"], "verified": true }
   ],
-  "manual_pending": [
-    { "id": "SHOT-01", "title": "Captura terminal docker --version / docker info", "target": "evidencias/02-docker/", "owner": "usuario" },
-    { "id": "SHOT-02", "title": "Captura Docker Desktop (Images/Containers)", "target": "evidencias/07-contenedor/", "owner": "usuario" },
-    { "id": "SHOT-03", "title": "Captura navegador http://localhost:3000 (app funcionando)", "target": "evidencias/08-pruebas/", "owner": "usuario" },
-    { "id": "SHOT-04", "title": "Captura navegador con el texto modificado (app.js:56)", "target": "evidencias/12-validacion/", "owner": "usuario" }
-  ]
+  "manual_pending": []
 }

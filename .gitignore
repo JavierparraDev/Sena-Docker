@@ -1,16 +1,79 @@
-# Dependencias
-node_modules/
-npm-debug.log*
+# =============================================================
+# AA2-EV02 - .gitignore
+# Objetivo: excluir del repositorio TODO lo que NO sea evidencia
+# del proyecto (dependencias, basura de SO/editor, temporales,
+# secretos). Las evidencias (evidencias/**, logs/**, metadata/**,
+# documento/**, app/** y docker/**) SI se versionan.
+# =============================================================
 
-# Entorno
+# --- Dependencias ---
+node_modules/
+bower_components/
+vendor/
+jspm_packages/
+
+# --- Secretos y entorno (nunca versionar) ---
 .env
 .env.*
-*.local
+*.pem
+*.key
+*.p12
+*.pfx
+secrets.*
+*credentials*
+*token*
+*.token
+.npmrc
 
-# Sistema
-.DS_Store
-Thumbs.db
-
-# Temporales
+# --- Temporales / caché ---
 *.tmp
+*.temp
+*.bak
+*.old
+*.orig
+*.rej
+*~
+.cache/
+.pytest_cache/
+__pycache__/
+*.pyc
 *.log.tmp
+npm-debug.log*
+yarn-error.log*
+*.tsbuildinfo
+
+# --- Basura de sistema operativo ---
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# --- Configuración de editores/IDE ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-project
+*.sublime-workspace
+
+# --- Paquetes / binarios descargados temporalmente ---
+*.tar.gz
+*.tgz
+*.zip
+*.rar
+*.7z
+
+# --- Cobertura y reports generados ---
+coverage/
+.nyc_output/
+htmlcov/
+*.lcov
+
+# --- Entornos virtuales Python (si se usan para generar el doc) ---
+venv/
+.venv/
+env/

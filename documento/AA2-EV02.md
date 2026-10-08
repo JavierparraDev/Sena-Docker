@@ -144,9 +144,11 @@ Server:
  Total Memory: 7.591GiB
 ```
 
-**Evidencia.** `evidencias/02-docker/docker-verificacion.txt`, `evidencias/02-docker/docker-info.txt`.
+**Evidencia.** `evidencias/02-docker/docker-verificacion.txt`, `evidencias/02-docker/docker-info.txt`, `evidencias/02-docker/docker-version-info.png`, `evidencias/02-docker/docker-info-server.png`.
 
-> Figura 2. Verificación del motor Docker mediante `docker --version`, `docker compose version` y `docker info`.
+![Figura 2. Verificación del motor Docker: `docker --version` (29.7.2) y `docker info` (cliente y plugins).](../evidencias/02-docker/docker-version-info.png){width=88%}
+
+![Figura 3. `docker info` — sección del servidor: `Server Version 29.7.2`, `Storage Driver: overlayfs`, `Operating System: Docker Desktop`, `Architecture: x86_64`, 16 CPU.](../evidencias/02-docker/docker-info-server.png){width=88%}
 
 **Análisis técnico.** `docker info` consulta al *daemon*; su respuesta confirma que el servidor está activo y describe el almacenamiento, la red y la arquitectura. Docker Compose está disponible como plugin (`docker compose`), aunque este taller no lo requiere porque se usa un único contenedor.
 
@@ -177,7 +179,7 @@ git clone --depth 1 https://github.com/docker/getting-started-app.git
 
 **Evidencia.** `evidencias/03-aplicacion/app-estructura.txt`.
 
-> Figura 3. Estructura y análisis de la aplicación de referencia.
+> Figura 4. Estructura y análisis de la aplicación de referencia.
 
 **Análisis técnico.** `src/index.js` monta el servidor Express, sirve los archivos estáticos y expone los endpoints REST `/items`. La interfaz es una SPA React que consulta esos endpoints. Identificar el puerto (3000) y el punto de entrada es imprescindible para escribir correctamente `EXPOSE` y `CMD` en el Dockerfile.
 
@@ -223,7 +225,7 @@ docker build -f docker/Dockerfile -t getting-started app/getting-started-app
 
 **Evidencia.** `evidencias/05-build/docker-build.txt`.
 
-> Figura 4. Proceso de `docker build` finalizado correctamente.
+> Figura 5. Proceso de `docker build` finalizado correctamente.
 
 **Análisis técnico.** BuildKit ejecuta cada instrucción del Dockerfile como una capa. `-f docker/Dockerfile` permite mantener el Dockerfile separado del código fuente (buena práctica), y `.` / `app/getting-started-app` define el **contexto de construcción** (los archivos disponibles para `COPY`).
 
@@ -248,7 +250,7 @@ docker image inspect getting-started
 
 **Evidencia.** `evidencias/06-imagen/docker-image-ls.txt`.
 
-> Figura 5. Imagen `getting-started` creada correctamente.
+> Figura 6. Imagen `getting-started` creada correctamente.
 
 **Análisis técnico.** `docker image ls` lista las imágenes almacenadas localmente. El *Image ID* es el hash del manifiesto de la imagen; identificarlo permite distinguir la versión inicial de la reconstruida tras la modificación.
 
@@ -268,7 +270,7 @@ docker run -dp 3000:3000 --name getting-started getting-started
 
 **Evidencia.** `evidencias/07-contenedor/docker-run-ps.txt`, `evidencias/07-contenedor/docker-logs.txt`.
 
-> Figura 6. Contenedor `getting-started` en ejecución y puerto mapeado.
+![Figura 7. Docker Desktop — el contenedor `getting-started` (`ba5968cb3faa`) en ejecución, con el puerto publicado `3000:3000`.](../evidencias/07-contenedor/docker-desktop-containers.png){width=92%}
 
 **Análisis técnico.** `docker run` crea e inicia un contenedor. `-d` lo ejecuta en segundo plano (*detached*). `-p 3000:3000` publica el puerto: el primer valor es el puerto del **host** y el segundo el del **contenedor**, de modo que `localhost:3000` en el host llega al puerto 3000 del contenedor. Aislar la aplicación en su propio *network namespace* y publicar sólo el puerto necesario es parte del diseño seguro de la arquitectura.
 
@@ -293,9 +295,9 @@ DELETE /items/:id -> OK                                               -> HTTP 20
 
 **Evidencia.** `evidencias/08-pruebas/app-funcional.txt`.
 
-> Figura 7. Aplicación en funcionamiento en `http://localhost:3000` (interfaz React).
+> Figura 8. Aplicación en funcionamiento en `http://localhost:3000` (interfaz React, verificada por HTTP).
 
-> **Nota de honestidad:** la captura del navegador la aporta el aprendiz; la verificación funcional aquí documentada se realizó por HTTP (código de estado y respuestas reales).
+> **Nota de honestidad:** la verificación funcional aquí documentada se realizó por HTTP (código de estado y respuestas reales). La captura del navegador de la aplicación desplegada se muestra en la **Figura 12**.
 
 **Análisis técnico.** Probar la API con `curl` demuestra que el servicio dentro del contenedor atiende peticiones reales y persiste datos (SQLite), no sólo que el proceso esté vivo. El puerto publicado conecta el tráfico del host con el proceso `node` del contenedor.
 
@@ -316,7 +318,7 @@ DELETE /items/:id -> OK                                               -> HTTP 20
 
 **Evidencia.** `evidencias/09-modificacion/modificacion-app.txt` (incluye `git diff`).
 
-> Figura 8. Modificación del código fuente en `app.js` línea 56.
+> Figura 9. Modificación del código fuente en `app.js` línea 56.
 
 **Análisis técnico.** El cambio se realizó sólo sobre la cadena requerida, sin alterar la lógica. Como el archivo forma parte de los estáticos servidos, el cambio debe propagarse mediante una **nueva imagen**; el contenedor en ejecución no lee el disco del host.
 
@@ -336,7 +338,7 @@ docker build -f docker/Dockerfile -t getting-started app/getting-started-app
 
 **Evidencia.** `evidencias/10-rebuild/docker-rebuild.txt`.
 
-> Figura 9. Reconstrucción de la imagen tras la modificación.
+> Figura 10. Reconstrucción de la imagen tras la modificación.
 
 **Análisis técnico.** Docker etiqueta la nueva imagen con el mismo nombre (`getting-started:latest`), por lo que el *tag* apunta ahora a la versión modificada y la imagen antigua queda "colgando" (sin etiqueta). La caché de capas hace que la reconstrucción sea rápida.
 
@@ -358,7 +360,7 @@ docker ps
 
 **Evidencia.** `evidencias/11-reemplazo/docker-stop-rm.txt`.
 
-> Figura 10. Detención y eliminación del contenedor anterior.
+> Figura 11. Detención y eliminación del contenedor anterior.
 
 **Análisis técnico.** No pueden coexistir dos contenedores publicando el **mismo puerto del host** (3000); el segundo `docker run -p 3000:3000` fallaría con *port is already allocated*. Por eso se detiene y elimina el anterior antes de crear el nuevo. `docker stop` envía SIGTERM (la app lo maneja con un *graceful shutdown*) y `docker rm` elimina el contenedor detenido. **No se ejecutaron comandos de limpieza masiva** (`docker system prune`, etc.) para no afectar otros proyectos del equipo.
 
@@ -386,7 +388,9 @@ GET / -> HTTP 200 | GET /items -> HTTP 200
 
 **Evidencia.** `evidencias/12-validacion/validacion-final.txt`.
 
-> Figura 11. Aplicación modificada ejecutándose dentro del nuevo contenedor.
+![Figura 12. Interfaz `Todo App` servida por el contenedor final en `http://localhost:3000`, con tareas gestionadas desde el navegador.](../evidencias/12-validacion/app-navegador.png){width=92%}
+
+> Figura 12. Aplicación modificada ejecutándose dentro del nuevo contenedor (captura del navegador).
 
 **Análisis técnico.** Esta es la prueba de extremo a extremo: el texto nuevo llega al navegador **desde el código fuente modificado, pasado por el Dockerfile, la nueva imagen y el nuevo contenedor**. Demuestra que la cadena de construcción propagó el cambio.
 
@@ -476,4 +480,4 @@ Los identificadores corresponden a evidencias reales registradas en `metadata/ev
 - **Anexo D. Lista de chequeo:** `metadata/checklist.json`.
 - **Anexo E. Script de verificación:** `scripts/verify.sh` y su salida en `logs/final-verification.log`.
 - **Anexo F. Evidencias de terminal:** carpeta `evidencias/`.
-- **Anexo G. Capturas manuales (aportadas por el aprendiz):** pendientes de inserción — capturas de Docker Desktop y del navegador en `http://localhost:3000` (estado vacío modificado). *No se generan capturas sintéticas.*
+- **Anexo G. Capturas de pantalla (reales, aportadas por el aprendiz):** `evidencias/02-docker/docker-version-info.png`, `evidencias/02-docker/docker-info-server.png`, `evidencias/07-contenedor/docker-desktop-containers.png` y `evidencias/12-validacion/app-navegador.png`. *No se generan capturas sintéticas; todas las imágenes incluidas corresponden a capturas reales del entorno.*
