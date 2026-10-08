@@ -1,0 +1,15 @@
+=== FASE 14 pruebas finales 2026-10-07 23:34:35 ===
+$ docker image ls getting-started
+IMAGE                    ID             DISK USAGE   CONTENT SIZE   EXTRA
+getting-started:latest   3346675b07f4        314MB         81.5MB   U    
+
+$ docker ps
+CONTAINER ID   IMAGE             COMMAND                  CREATED          STATUS          PORTS                                         NAMES
+ba5968cb3faa   getting-started   "docker-entrypoint.s…"   11 seconds ago   Up 11 seconds   0.0.0.0:3000->3000/tcp, [::]:3000->3000/tcp   getting-started
+
+$ docker ps -a | head
+CONTAINER ID   IMAGE                     COMMAND                  CREATED          STATUS                   PORTS                                         NAMES
+ba5968cb3faa   getting-started           "docker-entrypoint.s…"   11 seconds ago   Up 11 seconds            0.0.0.0:3000->3000/tcp, [::]:3000->3000/tcp   getting-started
+da53a52caca1   docker.n8n.io/n8nio/n8n   "tini -- /docker-ent…"   2 weeks ago      Exited (0) 2 weeks ago                                                 n8n
+53d2ee094d51   bot-binance-bot-paper     "python scripts/run_…"   3 weeks ago      Exited (0) 3 weeks ago                                                 bot-binance-bot-paper-1
+1e127dffa595   bot-binance-dashboard     "streamlit run app/d…"   3 weeks ago      Exited (0) 3 weeks ago                                                 bot-binance-dashboard-1

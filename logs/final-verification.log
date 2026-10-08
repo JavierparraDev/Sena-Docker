@@ -1,0 +1,17 @@
+================================================================
+AA2-EV02 - VERIFICACIÓN FINAL AUTOMATIZADA
+Fecha: 2026-10-07 23:34:41 -05
+================================================================
+  [PASS] Docker CLI disponible (Docker version 29.7.2, build a7dcaa6)
+  [PASS] Docker Engine responde (docker info)
+  [PASS] Imagen 'getting-started' existe
+     ID imagen: sha256:3346675b07f48f51599d89a2ae055cec4d1d47ef0d8384a33733875ed0da3cb5
+  [PASS] Contenedor 'getting-started' en ejecución
+     ID contenedor: ba5968cb3faa
+  [PASS] Puerto 3000 mapeado (host -> contenedor)
+  [PASS] Aplicación responde HTTP 200 en localhost:3000 (recibido: 200)
+  [PASS] Modificación visible: '¡Aún no tienes elementos pendientes! ¡Agrega uno arriba!'
+================================================================
+RESULTADO: 7 pruebas OK, 0 fallidas
+ESTADO GLOBAL: VERIFICACIÓN EXITOSA
+================================================================

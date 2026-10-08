@@ -1,0 +1,118 @@
+================================================================
+EVID-02 | FASE 03 | Aplicación de referencia docker/getting-started-app
+Fecha: 2026-10-07 23:33:12 -05
+Fuente: https://github.com/docker/getting-started-app (oficial Docker)
+Commit: 6b025fc53bc7b9bef435d6b09bcd1da5a871c9cc
+================================================================
+== Estructura de directorios ==
+.dockerignore
+README.md
+package-lock.json
+package.json
+spec/persistence/sqlite.spec.js
+spec/routes/addItem.spec.js
+spec/routes/deleteItem.spec.js
+spec/routes/getItems.spec.js
+spec/routes/updateItem.spec.js
+src/index.js
+src/persistence/index.js
+src/persistence/mysql.js
+src/persistence/sqlite.js
+src/routes/addItem.js
+src/routes/deleteItem.js
+src/routes/getItems.js
+src/routes/updateItem.js
+src/static/css/bootstrap.min.css
+src/static/css/font-awesome/all.min.css
+src/static/css/font-awesome/fa-brands-400.eot
+src/static/css/font-awesome/fa-brands-400.svg#fontawesome
+src/static/css/font-awesome/fa-brands-400.ttf
+src/static/css/font-awesome/fa-brands-400.woff
+src/static/css/font-awesome/fa-brands-400.woff2
+src/static/css/font-awesome/fa-regular-400.eot
+src/static/css/font-awesome/fa-regular-400.svg#fontawesome
+src/static/css/font-awesome/fa-regular-400.ttf
+src/static/css/font-awesome/fa-regular-400.woff
+src/static/css/font-awesome/fa-regular-400.woff2
+src/static/css/font-awesome/fa-solid-900.eot
+src/static/css/font-awesome/fa-solid-900.svg#fontawesome
+src/static/css/font-awesome/fa-solid-900.ttf
+src/static/css/font-awesome/fa-solid-900.woff
+src/static/css/font-awesome/fa-solid-900.woff2
+src/static/css/styles.css
+src/static/index.html
+src/static/js/app.js
+src/static/js/babel.min.js
+src/static/js/react-bootstrap.js
+src/static/js/react-dom.production.min.js
+src/static/js/react.production.min.js
+
+== package.json ==
+{
+  "name": "101-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon -L src/index.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "mysql2": "^3.16.1",
+    "sqlite3": "^5.1.7",
+    "uuid": "^13.0.0",
+    "wait-port": "^1.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  },
+  "overrides": {
+    "tar": "7.5.4",
+    "glob": "11.1.0",
+    "semver": "7.5.2",
+    "cross-spawn": "7.0.5",
+    "braces": "3.0.3",
+    "http-cache-semantics": "4.1.1",
+    "socks": "2.8.1"
+  }
+}
+== src/index.js (punto de entrada, puerto) ==
+const express = require('express');
+const app = express();
+const db = require('./persistence');
+const getItems = require('./routes/getItems');
+const addItem = require('./routes/addItem');
+const updateItem = require('./routes/updateItem');
+const deleteItem = require('./routes/deleteItem');
+
+app.use(express.json());
+app.use(express.static(__dirname + '/static'));
+
+app.get('/items', getItems);
+app.post('/items', addItem);
+app.put('/items/:id', updateItem);
+app.delete('/items/:id', deleteItem);
+
+db.init().then(() => {
+    app.listen(3000, () => console.log('Listening on port 3000'));
+}).catch((err) => {
+    console.error(err);
+    process.exit(1);
+});
+
+const gracefulShutdown = () => {
+    db.teardown()
+        .catch(() => {})
+        .then(() => process.exit());
+};
+
+process.on('SIGINT', gracefulShutdown);
+process.on('SIGTERM', gracefulShutdown);
+process.on('SIGUSR2', gracefulShutdown); // Sent by nodemon
+
+== Cadena a modificar en src/static/js/app.js ==
+56:                <p className="text-center">No items yet! Add one above!</p>
+
+== .dockerignore ==
+node_modules
+Dockerfile

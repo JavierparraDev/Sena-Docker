@@ -1,0 +1,30 @@
+{
+  "project": "AA2-EV02",
+  "generated_at": "2026-10-07T23:34:00-05:00",
+  "note": "El navegador no puede capturarse desde la terminal. Las evidencias de terminal/HTTP son reales; las capturas de navegador y Docker Desktop deben aportarse manualmente.",
+  "evidences": [
+    { "id": "EVID-01", "phase": 0, "title": "Diagnóstico del equipo", "file": "evidencias/00-diagnostico/diagnostico-equipo.txt", "criterion": ["CHECK-02"], "verified": true },
+    { "id": "EVID-02", "phase": 3, "title": "Aplicación de referencia (estructura y análisis)", "file": "evidencias/03-aplicacion/app-estructura.txt", "criterion": ["CHECK-04"], "verified": true },
+    { "id": "EVID-03", "phase": 2, "title": "docker --version", "file": "evidencias/02-docker/docker-verificacion.txt", "criterion": ["CHECK-01"], "verified": true },
+    { "id": "EVID-04", "phase": 2, "title": "docker info", "file": "evidencias/02-docker/docker-info.txt", "criterion": ["CHECK-01","CHECK-02"], "verified": true },
+    { "id": "EVID-05", "phase": 4, "title": "Dockerfile creado", "file": "evidencias/04-dockerfile/dockerfile-evidence.txt", "criterion": ["CHECK-03"], "verified": true },
+    { "id": "EVID-06", "phase": 5, "title": "docker build", "file": "evidencias/05-build/docker-build.txt", "criterion": ["CHECK-03"], "verified": true },
+    { "id": "EVID-07", "phase": 6, "title": "docker image ls", "file": "evidencias/06-imagen/docker-image-ls.txt", "criterion": ["CHECK-01","CHECK-03"], "verified": true },
+    { "id": "EVID-08", "phase": 7, "title": "docker run", "file": "evidencias/07-contenedor/docker-run-ps.txt", "criterion": ["CHECK-04"], "verified": true },
+    { "id": "EVID-09", "phase": 7, "title": "docker ps + docker port + logs", "file": "evidencias/07-contenedor/docker-run-ps.txt", "criterion": ["CHECK-01","CHECK-02","CHECK-04"], "verified": true },
+    { "id": "EVID-10", "phase": 8, "title": "Aplicación funcionando (HTTP/CRUD)", "file": "evidencias/08-pruebas/app-funcional.txt", "criterion": ["CHECK-04"], "verified": true },
+    { "id": "EVID-11", "phase": 9, "title": "Código modificado (app.js:56)", "file": "evidencias/09-modificacion/modificacion-app.txt", "criterion": ["CHECK-05"], "verified": true },
+    { "id": "EVID-12", "phase": 10, "title": "Reconstrucción de la imagen", "file": "evidencias/10-rebuild/docker-rebuild.txt", "criterion": ["CHECK-05"], "verified": true },
+    { "id": "EVID-13", "phase": 11, "title": "Detención/eliminación del contenedor", "file": "evidencias/11-reemplazo/docker-stop-rm.txt", "criterion": ["CHECK-01","CHECK-05"], "verified": true },
+    { "id": "EVID-14", "phase": 12, "title": "Nuevo contenedor", "file": "evidencias/12-validacion/validacion-final.txt", "criterion": ["CHECK-05"], "verified": true },
+    { "id": "EVID-15", "phase": 12, "title": "Aplicación modificada funcionando", "file": "evidencias/12-validacion/validacion-final.txt", "criterion": ["CHECK-05"], "verified": true },
+    { "id": "EVID-16", "phase": 13, "title": "Docker Hub", "file": null, "criterion": [], "verified": false, "note": "No realizado (fase opcional)." },
+    { "id": "EVID-17", "phase": 14, "title": "Verificación final automatizada", "file": "logs/final-verification.log", "criterion": ["CHECK-01","CHECK-03","CHECK-04","CHECK-05"], "verified": true }
+  ],
+  "manual_pending": [
+    { "id": "SHOT-01", "title": "Captura terminal docker --version / docker info", "target": "evidencias/02-docker/", "owner": "usuario" },
+    { "id": "SHOT-02", "title": "Captura Docker Desktop (Images/Containers)", "target": "evidencias/07-contenedor/", "owner": "usuario" },
+    { "id": "SHOT-03", "title": "Captura navegador http://localhost:3000 (app funcionando)", "target": "evidencias/08-pruebas/", "owner": "usuario" },
+    { "id": "SHOT-04", "title": "Captura navegador con el texto modificado (app.js:56)", "target": "evidencias/12-validacion/", "owner": "usuario" }
+  ]
+}

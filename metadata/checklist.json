@@ -1,0 +1,11 @@
+{
+  "project": "AA2-EV02",
+  "checked_at": "2026-10-07T23:34:41-05:00",
+  "checks": [
+    { "id": "CHECK-01", "indicator": "Maneja instrucciones para la navegación en Docker", "weight": 30, "result": "CUMPLE", "evidences": ["EVID-03","EVID-04","EVID-07","EVID-09","EVID-13"] },
+    { "id": "CHECK-02", "indicator": "Maneja los conceptos de contenedores", "weight": 30, "result": "CUMPLE", "evidences": ["EVID-01","EVID-04","EVID-09"] },
+    { "id": "CHECK-03", "indicator": "Genera con éxito la imagen para trabajar con el contenedor", "weight": 10, "result": "CUMPLE", "evidences": ["EVID-05","EVID-06","EVID-07"] },
+    { "id": "CHECK-04", "indicator": "Genera la aplicación y el entorno de desarrollo", "weight": 15, "result": "CUMPLE", "evidences": ["EVID-02","EVID-08","EVID-10"] },
+    { "id": "CHECK-05", "indicator": "Modifica con éxito la aplicación del contenedor", "weight": 15, "result": "CUMPLE", "evidences": ["EVID-11","EVID-12","EVID-13","EVID-14","EVID-15"] }
+  ]
+}

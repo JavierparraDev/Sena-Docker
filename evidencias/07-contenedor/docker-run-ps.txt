@@ -1,0 +1,19 @@
+================================================================
+EVID-08/09 | FASE 07 | Ejecución del contenedor
+Fecha: 2026-10-07 23:33:49 -05
+Comando: docker run -dp 3000:3000 --name getting-started getting-started
+================================================================
+$ docker run -dp 3000:3000 --name getting-started getting-started
+050918f28eba49c9cdb2076b6b365790749d4c7b85225d2817b5908dd975478a
+
+$ docker ps
+CONTAINER ID   IMAGE             COMMAND                  CREATED         STATUS         PORTS                                         NAMES
+050918f28eba   getting-started   "docker-entrypoint.s…"   4 seconds ago   Up 3 seconds   0.0.0.0:3000->3000/tcp, [::]:3000->3000/tcp   getting-started
+
+$ docker ps -a --filter name=getting-started
+CONTAINER ID   IMAGE             COMMAND                  CREATED         STATUS         PORTS                                         NAMES
+050918f28eba   getting-started   "docker-entrypoint.s…"   4 seconds ago   Up 3 seconds   0.0.0.0:3000->3000/tcp, [::]:3000->3000/tcp   getting-started
+
+$ docker port getting-started
+3000/tcp -> 0.0.0.0:3000
+3000/tcp -> [::]:3000

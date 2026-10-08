@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.12.1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>AA2-EV02 - Despliegue de contenedores Docker</title>
+  <style>
+
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+  <style type="text/css">:root { --azul:#0b3d91; --gris:#f5f6f8; --borde:#d0d7de; }
+body { font-family: "Segoe UI", Roboto, Arial, sans-serif; line-height: 1.55; color:#1b1f23;
+max-width: 900px; margin: 0 auto; padding: 32px 40px; }
+h1 { color: var(--azul); border-bottom: 3px solid var(--azul); padding-bottom: .3em; }
+h2 { color: var(--azul); border-bottom: 1px solid var(--borde); padding-bottom: .2em; margin-top: 1.6em; }
+h3 { color: #143d7a; margin-top: 1.3em; }
+table { border-collapse: collapse; width: 100%; margin: 1em 0; font-size: .95em; }
+th, td { border: 1px solid var(--borde); padding: 6px 10px; text-align: left; }
+th { background: var(--gris); }
+tr:nth-child(even) td { background: #fafbfc; }
+code { background: var(--gris); padding: 2px 5px; border-radius: 4px; font-family: "Cascadia Code", Consolas, monospace; font-size: .9em; }
+pre { background: #0d1117; color: #e6edf3; padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+pre code { background: transparent; color: inherit; }
+blockquote { border-left: 4px solid var(--borde); background: var(--gris); margin: 1em 0; padding: .5em 1em; color:#444; }
+hr { border: none; border-top: 1px solid var(--borde); margin: 2em 0; }
+a { color: var(--azul); }
+</style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">AA2-EV02 - Despliegue de contenedores Docker</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#aa2-ev02-taller-de-aplicación-ejercicio-de-despliegue-de-contenedores" id="toc-aa2-ev02-taller-de-aplicación-ejercicio-de-despliegue-de-contenedores">AA2-EV02
+— Taller de aplicación: ejercicio de despliegue de contenedores</a>
+<ul>
+<li><a href="#introducción" id="toc-introducción">1.
+Introducción</a></li>
+<li><a href="#objetivos" id="toc-objetivos">2. Objetivos</a></li>
+<li><a href="#requerimientos-del-entorno" id="toc-requerimientos-del-entorno">3. Requerimientos del
+entorno</a></li>
+<li><a href="#arquitectura-tecnológica" id="toc-arquitectura-tecnológica">4. Arquitectura tecnológica</a></li>
+<li><a href="#fase-00-diagnóstico-del-equipo" id="toc-fase-00-diagnóstico-del-equipo">5. FASE 00 — Diagnóstico del
+equipo</a></li>
+<li><a href="#fase-01-preparación-del-entorno-y-de-la-evidencia" id="toc-fase-01-preparación-del-entorno-y-de-la-evidencia">6. FASE 01 —
+Preparación del entorno y de la evidencia</a></li>
+<li><a href="#fase-02-verificación-de-docker" id="toc-fase-02-verificación-de-docker">7. FASE 02 — Verificación de
+Docker</a></li>
+<li><a href="#fase-03-obtención-y-análisis-de-la-aplicación" id="toc-fase-03-obtención-y-análisis-de-la-aplicación">8. FASE 03 —
+Obtención y análisis de la aplicación</a></li>
+<li><a href="#fase-04-dockerfile" id="toc-fase-04-dockerfile">9. FASE 04
+— Dockerfile</a></li>
+<li><a href="#fase-05-construcción-de-la-imagen" id="toc-fase-05-construcción-de-la-imagen">10. FASE 05 — Construcción de
+la imagen</a></li>
+<li><a href="#fase-06-verificación-de-la-imagen" id="toc-fase-06-verificación-de-la-imagen">11. FASE 06 — Verificación de
+la imagen</a></li>
+<li><a href="#fase-07-creación-y-ejecución-del-contenedor" id="toc-fase-07-creación-y-ejecución-del-contenedor">12. FASE 07 —
+Creación y ejecución del contenedor</a></li>
+<li><a href="#fase-08-verificación-de-la-aplicación" id="toc-fase-08-verificación-de-la-aplicación">13. FASE 08 —
+Verificación de la aplicación</a></li>
+<li><a href="#fase-09-modificación-de-la-aplicación" id="toc-fase-09-modificación-de-la-aplicación">14. FASE 09 —
+Modificación de la aplicación</a></li>
+<li><a href="#fase-10-reconstrucción-de-la-imagen" id="toc-fase-10-reconstrucción-de-la-imagen">15. FASE 10 —
+Reconstrucción de la imagen</a></li>
+<li><a href="#fase-11-reemplazo-del-contenedor-anterior" id="toc-fase-11-reemplazo-del-contenedor-anterior">16. FASE 11 —
+Reemplazo del contenedor anterior</a></li>
+<li><a href="#fase-12-nuevo-contenedor-y-validación-de-la-modificación" id="toc-fase-12-nuevo-contenedor-y-validación-de-la-modificación">17.
+FASE 12 — Nuevo contenedor y validación de la modificación</a></li>
+<li><a href="#fase-13-docker-hub" id="toc-fase-13-docker-hub">18. FASE
+13 — Docker Hub</a></li>
+<li><a href="#fase-14-pruebas-finales-verificación-automatizada" id="toc-fase-14-pruebas-finales-verificación-automatizada">19. FASE 14 —
+Pruebas finales (verificación automatizada)</a></li>
+<li><a href="#matriz-de-cumplimiento" id="toc-matriz-de-cumplimiento">20. Matriz de cumplimiento</a></li>
+<li><a href="#resultados-obtenidos" id="toc-resultados-obtenidos">21.
+Resultados obtenidos</a></li>
+<li><a href="#conclusiones" id="toc-conclusiones">22.
+Conclusiones</a></li>
+<li><a href="#anexos" id="toc-anexos">23. Anexos</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="aa2-ev02-taller-de-aplicación-ejercicio-de-despliegue-de-contenedores">AA2-EV02
+— Taller de aplicación: ejercicio de despliegue de contenedores</h1>
+<p><strong>Servicio Nacional de Aprendizaje — SENA</strong></p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Dato</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Programa</td>
+<td>Despliegue de aplicaciones y servicios en contenedores Docker</td>
+</tr>
+<tr>
+<td>Resultado de aprendizaje</td>
+<td>220501086-02 — Crear la infraestructura y plataforma tecnológica
+según los requerimientos del proyecto de Software</td>
+</tr>
+<tr>
+<td>Actividad de aprendizaje</td>
+<td>AA2 — Generar un ambiente de desarrollo a partir de la ejecución de
+imágenes para la creación de contenedores</td>
+</tr>
+<tr>
+<td>Evidencia</td>
+<td>AA2-EV02 — Taller de aplicación: ejercicio despliegue de
+contenedores</td>
+</tr>
+<tr>
+<td>Aprendiz</td>
+<td>Javier Parra</td>
+</tr>
+<tr>
+<td>Fecha</td>
+<td>7 de octubre de 2026</td>
+</tr>
+<tr>
+<td>Entorno</td>
+<td>Windows 11 + WSL2 (Ubuntu 24.04.4 LTS), x86_64</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="introducción">1. Introducción</h2>
+<p><strong>Docker</strong> es una plataforma de contenedores que permite
+empaquetar una aplicación junto con todas sus dependencias en una unidad
+portátil y reproducible. Los conceptos centrales son:</p>
+<ul>
+<li><strong>Imagen:</strong> plantilla de solo lectura, inmutable y
+versionada, que contiene el sistema de archivos y la configuración
+necesarios para ejecutar una aplicación.</li>
+<li><strong>Contenedor:</strong> instancia en ejecución de una imagen.
+Es un proceso aislado con su propio sistema de archivos, red y espacio
+de procesos.</li>
+<li><strong>Dockerfile:</strong> archivo de texto con las instrucciones
+que describen cómo construir una imagen (imagen base, dependencias,
+código, comando de inicio).</li>
+<li><strong>Docker Engine:</strong> servicio que construye y ejecuta los
+contenedores; en este taller se ejecuta a través de <strong>Docker
+Desktop</strong> sobre <strong>WSL2</strong>.</li>
+<li><strong>Entorno de desarrollo:</strong> conjunto de herramientas y
+servicios (código fuente, gestor de dependencias, motor de contenedores,
+puertos) que permite construir, ejecutar y probar la aplicación de forma
+aislada y controlada.</li>
+</ul>
+<p>Esta práctica despliega una aplicación <strong>Node.js + Express +
+React</strong> (lista de tareas) dentro de un contenedor, la verifica en
+el navegador, <strong>modifica su código</strong>, reconstruye la
+imagen, reemplaza el contenedor y comprueba de extremo a extremo que el
+cambio llega hasta la aplicación servida.</p>
+<h2 id="objetivos">2. Objetivos</h2>
+<h3 id="objetivo-general">Objetivo general</h3>
+<p>Desplegar una aplicación en un contenedor Docker a partir de un
+Dockerfile, verificando su funcionamiento y demostrando el ciclo
+completo <strong>código → imagen → contenedor → puerto →
+aplicación</strong>, incluida la modificación y reconstrucción de la
+aplicación.</p>
+<h3 id="objetivos-específicos">Objetivos específicos</h3>
+<ol type="1">
+<li>Preparar el entorno y la arquitectura tecnológica (Docker Desktop +
+WSL2).</li>
+<li>Verificar el correcto funcionamiento del motor Docker.</li>
+<li>Construir una imagen propia a partir de un Dockerfile.</li>
+<li>Ejecutar el contenedor y exponer la aplicación en el puerto
+3000.</li>
+<li>Comprobar el funcionamiento funcional de la aplicación (CRUD).</li>
+<li>Modificar el código de la aplicación, reconstruir la imagen y
+reemplazar el contenedor.</li>
+<li>Documentar la evidencia y demostrar los cinco indicadores de la
+lista de chequeo.</li>
+</ol>
+<h2 id="requerimientos-del-entorno">3. Requerimientos del entorno</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Componente</th>
+<th>Detalle real verificado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sistema operativo</td>
+<td>Windows 11 con WSL2</td>
+</tr>
+<tr>
+<td>Distribución</td>
+<td>Ubuntu 24.04.4 LTS (kernel 6.18.33.2-microsoft-standard-WSL2)</td>
+</tr>
+<tr>
+<td>Arquitectura</td>
+<td>x86_64</td>
+</tr>
+<tr>
+<td>Procesador</td>
+<td>12th Gen Intel(R) Core(TM) i7-12650H (16 vCPU)</td>
+</tr>
+<tr>
+<td>Memoria RAM</td>
+<td>7.6 GiB</td>
+</tr>
+<tr>
+<td>Almacenamiento libre</td>
+<td>~933 GB</td>
+</tr>
+<tr>
+<td>Motor de contenedores</td>
+<td>Docker Desktop — Docker Engine 29.7.2</td>
+</tr>
+<tr>
+<td>Docker Compose</td>
+<td>v5.3.1</td>
+</tr>
+<tr>
+<td>Git</td>
+<td>2.43.0</td>
+</tr>
+<tr>
+<td>Node.js</td>
+<td>v24.19.0 (host)</td>
+</tr>
+<tr>
+<td>npm</td>
+<td>11.17.0</td>
+</tr>
+<tr>
+<td>Editor</td>
+<td>Visual Studio Code 1.139.1</td>
+</tr>
+</tbody>
+</table>
+<h2 id="arquitectura-tecnológica">4. Arquitectura tecnológica</h2>
+<pre class="text"><code>Windows 11 (host)
+   |
+   v
+WSL2 - Ubuntu 24.04  ---&gt;  Docker Desktop
+                                |
+                                v
+                          Docker Engine 29.7.2
+                                |
+                                v
+                      Imagen: getting-started:latest
+                                |
+                                v
+                     Contenedor: getting-started
+                                |
+                                v
+                        Puerto 3000 (host -&gt; contenedor)
+                                |
+                                v
+                     Navegador: http://localhost:3000</code></pre>
+<p>La aplicación se compone de: <code>src/index.js</code> (servidor
+Express, escucha en el puerto 3000), <code>src/routes/</code> (endpoints
+REST <code>/items</code>), <code>src/persistence/</code> (SQLite) y
+<code>src/static/</code> (interfaz React). El contenedor aísla el
+runtime Node.js y sus dependencias del resto del sistema.</p>
+<h2 id="fase-00-diagnóstico-del-equipo">5. FASE 00 — Diagnóstico del
+equipo</h2>
+<p><strong>Objetivo.</strong> Determinar el estado real del entorno
+antes de instalar o modificar cualquier cosa.</p>
+<p><strong>Procedimiento.</strong> Se ejecutaron comprobaciones no
+destructivas de sistema operativo, hardware, Docker, Git, Node.js y
+editor.</p>
+<p><strong>Comandos.</strong></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">uname</span> <span class="at">-a</span><span class="kw">;</span> <span class="fu">cat</span> /etc/os-release<span class="kw">;</span> <span class="fu">arch</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">lscpu</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-E</span> <span class="st">&quot;Model name|^CPU\(s\)&quot;</span><span class="kw">;</span> <span class="fu">free</span> <span class="at">-h</span><span class="kw">;</span> <span class="fu">df</span> <span class="at">-h</span> /</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> <span class="at">--version</span><span class="kw">;</span> <span class="ex">docker</span> info<span class="kw">;</span> <span class="ex">docker</span> compose version</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> <span class="at">--version</span><span class="kw">;</span> <span class="ex">node</span> <span class="at">--version</span><span class="kw">;</span> <span class="ex">npm</span> <span class="at">--version</span><span class="kw">;</span> <span class="ex">code</span> <span class="at">--version</span></span></code></pre></div>
+<p><strong>Resultado.</strong> Docker Desktop estaba instalado pero con
+el motor detenido inicialmente; tras activarlo,
+<code>docker --version</code> devolvió
+<code>Docker version 29.7.2</code> y <code>docker info</code> mostró un
+servidor operativo con <code>Storage Driver: overlayfs</code>, 16 CPU y
+7.59 GiB de memoria.</p>
+<p><strong>Evidencia.</strong>
+<code>evidencias/00-diagnostico/diagnostico-equipo.txt</code>.</p>
+<blockquote>
+<p>Figura 1. Diagnóstico del equipo: sistema operativo WSL2, hardware y
+herramientas disponibles.</p>
+</blockquote>
+<p><strong>Análisis técnico.</strong> El motor Docker es el componente
+que realmente construye y ejecuta contenedores; el cliente
+<code>docker</code> sólo lo controla. Confirmar que el servidor responde
+(no solo que el cliente existe) es requisito indispensable antes de
+continuar.</p>
+<p><strong>Criterio SENA.</strong> Aporta a <em>CHECK-02</em> (conceptos
+de contenedores) y a la preparación de la arquitectura tecnológica.</p>
+<h2 id="fase-01-preparación-del-entorno-y-de-la-evidencia">6. FASE 01 —
+Preparación del entorno y de la evidencia</h2>
+<p><strong>Objetivo.</strong> Estructurar el proyecto y el sistema de
+trazabilidad de evidencias.</p>
+<p><strong>Procedimiento.</strong> Se creó la estructura de carpetas
+<code>app/</code>, <code>docker/</code>, <code>scripts/</code>,
+<code>evidencias/00-diagnostico … 14-final</code>, <code>logs/</code>,
+<code>metadata/</code> y <code>documento/</code>. Se inicializaron
+<code>metadata/project-state.json</code>,
+<code>metadata/commands.log</code>,
+<code>metadata/evidence-index.json</code> y
+<code>metadata/checklist.json</code>.</p>
+<p><strong>Resultado.</strong> Estructura de evidencia organizada
+cronológicamente y estado del proyecto en formato JSON.</p>
+<h2 id="fase-02-verificación-de-docker">7. FASE 02 — Verificación de
+Docker</h2>
+<p><strong>Objetivo.</strong> Comprobar que el motor Docker funciona
+correctamente.</p>
+<p><strong>Comandos.</strong></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> <span class="at">--version</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> compose version</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> info</span></code></pre></div>
+<p><strong>Resultado.</strong></p>
+<pre class="text"><code>Docker version 29.7.2, build a7dcaa6
+Docker Compose version v5.3.1
+Server:
+ Server Version: 29.7.2
+ Storage Driver: overlayfs
+ Operating System: Docker Desktop
+ Architecture: x86_64
+ CPUs: 16
+ Total Memory: 7.591GiB</code></pre>
+<p><strong>Evidencia.</strong>
+<code>evidencias/02-docker/docker-verificacion.txt</code>,
+<code>evidencias/02-docker/docker-info.txt</code>.</p>
+<blockquote>
+<p>Figura 2. Verificación del motor Docker mediante
+<code>docker --version</code>, <code>docker compose version</code> y
+<code>docker info</code>.</p>
+</blockquote>
+<p><strong>Análisis técnico.</strong> <code>docker info</code> consulta
+al <em>daemon</em>; su respuesta confirma que el servidor está activo y
+describe el almacenamiento, la red y la arquitectura. Docker Compose
+está disponible como plugin (<code>docker compose</code>), aunque este
+taller no lo requiere porque se usa un único contenedor.</p>
+<p><strong>Criterio SENA.</strong> <em>CHECK-01</em> (navegación en
+Docker) y <em>CHECK-02</em> (Docker Engine).</p>
+<h2 id="fase-03-obtención-y-análisis-de-la-aplicación">8. FASE 03 —
+Obtención y análisis de la aplicación</h2>
+<p><strong>Objetivo.</strong> Obtener la aplicación de referencia y
+analizar su estructura sin modificarla.</p>
+<p><strong>Procedimiento.</strong> Se clonó el repositorio oficial de la
+aplicación del tutorial de Docker.</p>
+<p><strong>Comandos.</strong></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone <span class="at">--depth</span> 1 https://github.com/docker/getting-started-app.git</span></code></pre></div>
+<p><strong>Resultado.</strong> Aplicación obtenida en el commit
+<code>6b025fc53bc7b9bef435d6b09bcd1da5a871c9cc</code>.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Elemento</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nombre (<code>package.json</code>)</td>
+<td><code>101-app</code></td>
+</tr>
+<tr>
+<td>Dependencias</td>
+<td><code>express ^5.2.1</code>, <code>sqlite3 ^5.1.7</code>,
+<code>mysql2 ^3.16.1</code>, <code>uuid ^13.0.0</code></td>
+</tr>
+<tr>
+<td>Punto de entrada</td>
+<td><code>src/index.js</code></td>
+</tr>
+<tr>
+<td>Puerto</td>
+<td><code>3000</code> (<code>app.listen(3000)</code>)</td>
+</tr>
+<tr>
+<td>Interfaz</td>
+<td><code>src/static/index.html</code> +
+<code>src/static/js/app.js</code> (React)</td>
+</tr>
+<tr>
+<td>Persistencia</td>
+<td>SQLite (<code>src/persistence/sqlite.js</code>)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Evidencia.</strong>
+<code>evidencias/03-aplicacion/app-estructura.txt</code>.</p>
+<blockquote>
+<p>Figura 3. Estructura y análisis de la aplicación de referencia.</p>
+</blockquote>
+<p><strong>Análisis técnico.</strong> <code>src/index.js</code> monta el
+servidor Express, sirve los archivos estáticos y expone los endpoints
+REST <code>/items</code>. La interfaz es una SPA React que consulta esos
+endpoints. Identificar el puerto (3000) y el punto de entrada es
+imprescindible para escribir correctamente <code>EXPOSE</code> y
+<code>CMD</code> en el Dockerfile.</p>
+<p><strong>Criterio SENA.</strong> <em>CHECK-04</em> (aplicación y
+entorno de desarrollo).</p>
+<h2 id="fase-04-dockerfile">9. FASE 04 — Dockerfile</h2>
+<p><strong>Objetivo.</strong> Definir la receta de construcción de la
+imagen.</p>
+<p><strong>Procedimiento.</strong> Se creó
+<code>docker/Dockerfile</code>.</p>
+<p><strong>Dockerfile.</strong></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode dockerfile"><code class="sourceCode dockerfile"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> node:22-alpine</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">WORKDIR</span> /app</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> package.json package-lock.json ./</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">npm</span> ci <span class="at">--omit</span><span class="op">=</span>dev</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> . .</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="kw">EXPOSE</span> 3000</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="kw">CMD</span> [<span class="st">&quot;node&quot;</span>, <span class="st">&quot;src/index.js&quot;</span>]</span></code></pre></div>
+<p><strong>Evidencia.</strong>
+<code>evidencias/04-dockerfile/dockerfile-evidence.txt</code>.</p>
+<p><strong>Análisis técnico.</strong> La imagen base
+<code>node:22-alpine</code> es una versión <strong>LTS</strong> de
+Node.js sobre Alpine Linux (imagen reducida). El material del SENA
+referencia <code>node:12-alpine</code>, que <strong>está fuera de
+soporte (EOL)</strong>; se usó la versión LTS vigente por compatibilidad
+con <code>express 5</code> y <code>sqlite3 5.x</code>. Copiar primero
+<code>package.json</code> y <code>package-lock.json</code> y luego el
+código permite aprovechar la caché de capas: las dependencias sólo se
+reinstalan si cambian los manifiestos. <code>npm ci</code> garantiza una
+instalación reproducible a partir del <em>lockfile</em>.
+<code>CMD</code> usa la forma <em>exec</em>
+(<code>[&quot;node&quot;, &quot;src/index.js&quot;]</code>), que evita un shell
+intermedio.</p>
+<p><strong>Criterio SENA.</strong> <em>CHECK-03</em> (imagen),
+<em>CHECK-02</em> (Dockerfile).</p>
+<blockquote>
+<p><strong>Diferencia respecto al material:</strong> versión de Node
+<code>12</code> (material) → <code>22</code> (práctica). Motivo: EOL del
+12 y compatibilidad de dependencias.</p>
+</blockquote>
+<h2 id="fase-05-construcción-de-la-imagen">10. FASE 05 — Construcción de
+la imagen</h2>
+<p><strong>Objetivo.</strong> Construir la imagen a partir del
+Dockerfile.</p>
+<p><strong>Comando.</strong></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> build <span class="at">-f</span> docker/Dockerfile <span class="at">-t</span> getting-started app/getting-started-app</span></code></pre></div>
+<p><strong>Resultado.</strong> La construcción terminó con
+<code>EXIT=0</code>. Se descargó la imagen base
+<code>node:22-alpine</code> (Node 22.23.3), se instalaron 244 paquetes
+con <code>npm ci</code> y se generó <code>getting-started:latest</code>
+con ID <code>70d582dbf294</code>.</p>
+<p><strong>Evidencia.</strong>
+<code>evidencias/05-build/docker-build.txt</code>.</p>
+<blockquote>
+<p>Figura 4. Proceso de <code>docker build</code> finalizado
+correctamente.</p>
+</blockquote>
+<p><strong>Análisis técnico.</strong> BuildKit ejecuta cada instrucción
+del Dockerfile como una capa. <code>-f docker/Dockerfile</code> permite
+mantener el Dockerfile separado del código fuente (buena práctica), y
+<code>.</code> / <code>app/getting-started-app</code> define el
+<strong>contexto de construcción</strong> (los archivos disponibles para
+<code>COPY</code>).</p>
+<p><strong>Criterio SENA.</strong> <em>CHECK-03</em> (genera con éxito
+la imagen).</p>
+<h2 id="fase-06-verificación-de-la-imagen">11. FASE 06 — Verificación de
+la imagen</h2>
+<p><strong>Objetivo.</strong> Confirmar que la imagen existe y registrar
+sus metadatos.</p>
+<p><strong>Comando.</strong></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> image ls getting-started</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> image inspect getting-started</span></code></pre></div>
+<p><strong>Resultado.</strong></p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>Repository</th>
+<th>Tag</th>
+<th>Image ID</th>
+<th>Tamaño</th>
+<th>Arquitectura</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>getting-started</td>
+<td>latest</td>
+<td>70d582dbf294 (v1)</td>
+<td>81.5 MB (contenido)</td>
+<td>linux/amd64</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Evidencia.</strong>
+<code>evidencias/06-imagen/docker-image-ls.txt</code>.</p>
+<blockquote>
+<p>Figura 5. Imagen <code>getting-started</code> creada
+correctamente.</p>
+</blockquote>
+<p><strong>Análisis técnico.</strong> <code>docker image ls</code> lista
+las imágenes almacenadas localmente. El <em>Image ID</em> es el hash del
+manifiesto de la imagen; identificarlo permite distinguir la versión
+inicial de la reconstruida tras la modificación.</p>
+<p><strong>Criterio SENA.</strong> <em>CHECK-01</em> y
+<em>CHECK-03</em>.</p>
+<h2 id="fase-07-creación-y-ejecución-del-contenedor">12. FASE 07 —
+Creación y ejecución del contenedor</h2>
+<p><strong>Objetivo.</strong> Ejecutar un contenedor a partir de la
+imagen y exponer la aplicación.</p>
+<p><strong>Comando.</strong></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-dp</span> 3000:3000 <span class="at">--name</span> getting-started getting-started</span></code></pre></div>
+<p><strong>Resultado.</strong> Se creó el contenedor
+<code>050918f28eba</code>. <code>docker ps</code> mostró el contenedor
+<code>Up</code> con el mapeo <code>0.0.0.0:3000-&gt;3000/tcp</code>. Los
+logs indicaron <code>Listening on port 3000</code>.</p>
+<p><strong>Evidencia.</strong>
+<code>evidencias/07-contenedor/docker-run-ps.txt</code>,
+<code>evidencias/07-contenedor/docker-logs.txt</code>.</p>
+<blockquote>
+<p>Figura 6. Contenedor <code>getting-started</code> en ejecución y
+puerto mapeado.</p>
+</blockquote>
+<p><strong>Análisis técnico.</strong> <code>docker run</code> crea e
+inicia un contenedor. <code>-d</code> lo ejecuta en segundo plano
+(<em>detached</em>). <code>-p 3000:3000</code> publica el puerto: el
+primer valor es el puerto del <strong>host</strong> y el segundo el del
+<strong>contenedor</strong>, de modo que <code>localhost:3000</code> en
+el host llega al puerto 3000 del contenedor. Aislar la aplicación en su
+propio <em>network namespace</em> y publicar sólo el puerto necesario es
+parte del diseño seguro de la arquitectura.</p>
+<p><strong>Criterio SENA.</strong> <em>CHECK-04</em>, <em>CHECK-02</em>
+y <em>CHECK-01</em>.</p>
+<h2 id="fase-08-verificación-de-la-aplicación">13. FASE 08 —
+Verificación de la aplicación</h2>
+<p><strong>Objetivo.</strong> Comprobar que la aplicación funciona de
+verdad (no sólo que el contenedor arranca).</p>
+<p><strong>Procedimiento.</strong> Se accedió a
+<code>http://localhost:3000</code> y se probó el CRUD completo por
+HTTP.</p>
+<p><strong>Comandos y resultado.</strong></p>
+<pre class="text"><code>GET  /            -&gt; HTTP 200 | 858 bytes | text/html | &lt;title&gt;Todo App&lt;/title&gt;
+GET  /items       -&gt; []                                   (estado inicial vacío)
+POST /items       -&gt; {&quot;id&quot;:&quot;1ea4...&quot;,&quot;name&quot;:&quot;Estudiar Docker&quot;}         -&gt; HTTP 200
+POST /items       -&gt; {&quot;id&quot;:&quot;65d7...&quot;,&quot;name&quot;:&quot;Desplegar contenedor&quot;}    -&gt; HTTP 200
+PUT  /items/:id   -&gt; {&quot;completed&quot;:true}                               -&gt; HTTP 200
+DELETE /items/:id -&gt; OK                                               -&gt; HTTP 200</code></pre>
+<p><strong>Evidencia.</strong>
+<code>evidencias/08-pruebas/app-funcional.txt</code>.</p>
+<blockquote>
+<p>Figura 7. Aplicación en funcionamiento en
+<code>http://localhost:3000</code> (interfaz React).</p>
+</blockquote>
+<blockquote>
+<p><strong>Nota de honestidad:</strong> la captura del navegador la
+aporta el aprendiz; la verificación funcional aquí documentada se
+realizó por HTTP (código de estado y respuestas reales).</p>
+</blockquote>
+<p><strong>Análisis técnico.</strong> Probar la API con
+<code>curl</code> demuestra que el servicio dentro del contenedor
+atiende peticiones reales y persiste datos (SQLite), no sólo que el
+proceso esté vivo. El puerto publicado conecta el tráfico del host con
+el proceso <code>node</code> del contenedor.</p>
+<p><strong>Criterio SENA.</strong> <em>CHECK-04</em> (genera la
+aplicación y el entorno de desarrollo).</p>
+<h2 id="fase-09-modificación-de-la-aplicación">14. FASE 09 —
+Modificación de la aplicación</h2>
+<p><strong>Objetivo.</strong> Modificar el código de la aplicación para
+demostrar el ciclo de cambio y reconstrucción.</p>
+<p><strong>Procedimiento.</strong> Se localizó el mensaje de lista vacía
+en <code>src/static/js/app.js</code> y se editó únicamente ese
+texto.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Archivo</td>
+<td><code>app/getting-started-app/src/static/js/app.js</code></td>
+</tr>
+<tr>
+<td>Línea</td>
+<td>56</td>
+</tr>
+<tr>
+<td>Valor anterior</td>
+<td><code>No items yet! Add one above!</code></td>
+</tr>
+<tr>
+<td>Valor nuevo</td>
+<td><code>¡Aún no tienes elementos pendientes! ¡Agrega uno arriba!</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Evidencia.</strong>
+<code>evidencias/09-modificacion/modificacion-app.txt</code> (incluye
+<code>git diff</code>).</p>
+<blockquote>
+<p>Figura 8. Modificación del código fuente en <code>app.js</code> línea
+56.</p>
+</blockquote>
+<p><strong>Análisis técnico.</strong> El cambio se realizó sólo sobre la
+cadena requerida, sin alterar la lógica. Como el archivo forma parte de
+los estáticos servidos, el cambio debe propagarse mediante una
+<strong>nueva imagen</strong>; el contenedor en ejecución no lee el
+disco del host.</p>
+<p><strong>Criterio SENA.</strong> <em>CHECK-05</em> (modifica con éxito
+la aplicación del contenedor).</p>
+<h2 id="fase-10-reconstrucción-de-la-imagen">15. FASE 10 —
+Reconstrucción de la imagen</h2>
+<p><strong>Objetivo.</strong> Generar una nueva versión de la imagen con
+el cambio.</p>
+<p><strong>Comando.</strong></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> build <span class="at">-f</span> docker/Dockerfile <span class="at">-t</span> getting-started app/getting-started-app</span></code></pre></div>
+<p><strong>Resultado.</strong> Nuevo Image ID <code>3346675b07f4</code>,
+distinto del inicial <code>70d582dbf294</code>. Las capas de la imagen
+base y de dependencias se reutilizaron desde caché
+(<code>CACHED</code>); sólo la capa <code>COPY . .</code> se
+reconstruyó.</p>
+<p><strong>Evidencia.</strong>
+<code>evidencias/10-rebuild/docker-rebuild.txt</code>.</p>
+<blockquote>
+<p>Figura 9. Reconstrucción de la imagen tras la modificación.</p>
+</blockquote>
+<p><strong>Análisis técnico.</strong> Docker etiqueta la nueva imagen
+con el mismo nombre (<code>getting-started:latest</code>), por lo que el
+<em>tag</em> apunta ahora a la versión modificada y la imagen antigua
+queda “colgando” (sin etiqueta). La caché de capas hace que la
+reconstrucción sea rápida.</p>
+<p><strong>Criterio SENA.</strong> <em>CHECK-05</em> y
+<em>CHECK-03</em>.</p>
+<h2 id="fase-11-reemplazo-del-contenedor-anterior">16. FASE 11 —
+Reemplazo del contenedor anterior</h2>
+<p><strong>Objetivo.</strong> Retirar el contenedor antiguo (que aún
+ejecuta la versión sin modificar).</p>
+<p><strong>Comandos.</strong></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> stop 050918f28eba</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> rm 050918f28eba</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> ps</span></code></pre></div>
+<p><strong>Resultado.</strong> El contenedor <code>050918f28eba</code>
+se detuvo y eliminó; <code>docker ps</code> ya no lo muestra y el puerto
+3000 quedó libre.</p>
+<p><strong>Evidencia.</strong>
+<code>evidencias/11-reemplazo/docker-stop-rm.txt</code>.</p>
+<blockquote>
+<p>Figura 10. Detención y eliminación del contenedor anterior.</p>
+</blockquote>
+<p><strong>Análisis técnico.</strong> No pueden coexistir dos
+contenedores publicando el <strong>mismo puerto del host</strong>
+(3000); el segundo <code>docker run -p 3000:3000</code> fallaría con
+<em>port is already allocated</em>. Por eso se detiene y elimina el
+anterior antes de crear el nuevo. <code>docker stop</code> envía SIGTERM
+(la app lo maneja con un <em>graceful shutdown</em>) y
+<code>docker rm</code> elimina el contenedor detenido. <strong>No se
+ejecutaron comandos de limpieza masiva</strong>
+(<code>docker system prune</code>, etc.) para no afectar otros proyectos
+del equipo.</p>
+<p><strong>Criterio SENA.</strong> <em>CHECK-01</em> y
+<em>CHECK-05</em>.</p>
+<h2 id="fase-12-nuevo-contenedor-y-validación-de-la-modificación">17.
+FASE 12 — Nuevo contenedor y validación de la modificación</h2>
+<p><strong>Objetivo.</strong> Ejecutar la versión actualizada y
+comprobar que el cambio es visible.</p>
+<p><strong>Comando.</strong></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-dp</span> 3000:3000 <span class="at">--name</span> getting-started getting-started</span></code></pre></div>
+<p><strong>Resultado.</strong> Nuevo contenedor
+<code>ba5968cb3faa</code>. La verificación del recurso servido confirmó
+el cambio:</p>
+<pre class="text"><code>$ curl -s http://localhost:3000/js/app.js | grep &quot;elementos pendientes&quot;
+56: &lt;p className=&quot;text-center&quot;&gt;¡Aún no tienes elementos pendientes! ¡Agrega uno arriba!&lt;/p&gt;
+
+Cadena antigua &quot;No items yet&quot;: ELIMINADA
+GET / -&gt; HTTP 200 | GET /items -&gt; HTTP 200</code></pre>
+<p><strong>Evidencia.</strong>
+<code>evidencias/12-validacion/validacion-final.txt</code>.</p>
+<blockquote>
+<p>Figura 11. Aplicación modificada ejecutándose dentro del nuevo
+contenedor.</p>
+</blockquote>
+<p><strong>Análisis técnico.</strong> Esta es la prueba de extremo a
+extremo: el texto nuevo llega al navegador <strong>desde el código
+fuente modificado, pasado por el Dockerfile, la nueva imagen y el nuevo
+contenedor</strong>. Demuestra que la cadena de construcción propagó el
+cambio.</p>
+<p><strong>Criterio SENA.</strong> <em>CHECK-05</em> (modificación
+exitosa).</p>
+<h2 id="fase-13-docker-hub">18. FASE 13 — Docker Hub</h2>
+<p><strong>Estado: NO REALIZADO (fase opcional).</strong></p>
+<p>La publicación en Docker Hub no es necesaria para la lista de chequeo
+y requiere autenticación interactiva. Conforme a la regla de seguridad,
+no se solicitan ni se almacenan credenciales. Si se desea, el aprendiz
+puede ejecutar manualmente:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> login</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> tag getting-started <span class="op">&lt;</span>USUARIO<span class="op">&gt;</span>/getting-started</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> push <span class="op">&lt;</span>USUARIO<span class="op">&gt;</span>/getting-started</span></code></pre></div>
+<p>Se marca honestamente como <strong>no realizado</strong>; no
+constituye evidencia de cumplimiento.</p>
+<h2 id="fase-14-pruebas-finales-verificación-automatizada">19. FASE 14 —
+Pruebas finales (verificación automatizada)</h2>
+<p><strong>Objetivo.</strong> Auditar automáticamente el despliegue
+completo.</p>
+<p><strong>Comando.</strong></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> scripts/verify.sh</span></code></pre></div>
+<p><strong>Resultado (real).</strong></p>
+<pre class="text"><code>[PASS] Docker CLI disponible (Docker version 29.7.2)
+[PASS] Docker Engine responde (docker info)
+[PASS] Imagen &#39;getting-started&#39; existe  (ID sha256:3346675b07f4...)
+[PASS] Contenedor &#39;getting-started&#39; en ejecución (ID ba5968cb3faa)
+[PASS] Puerto 3000 mapeado (host -&gt; contenedor)
+[PASS] Aplicación responde HTTP 200 en localhost:3000
+[PASS] Modificación visible: &#39;¡Aún no tienes elementos pendientes! ¡Agrega uno arriba!&#39;
+RESULTADO: 7 pruebas OK, 0 fallidas
+ESTADO GLOBAL: VERIFICACIÓN EXITOSA</code></pre>
+<p><strong>Evidencia.</strong>
+<code>logs/final-verification.log</code>.</p>
+<blockquote>
+<p><strong>Error encontrado y corregido:</strong> la primera versión del
+script usaba el patrón <code>grep &quot;3000-&gt;&quot;</code>, que no coincidía
+con la salida real de <code>docker port</code>
+(<code>3000/tcp -&gt; 0.0.0.0:3000</code>). Se corrigió el patrón a
+<code>3000/tcp -&gt;</code> y la verificación pasó a 7/7. Este episodio
+se documenta como parte del aprendizaje (diagnóstico de un falso
+negativo, no de un fallo de despliegue).</p>
+</blockquote>
+<h2 id="matriz-de-cumplimiento">20. Matriz de cumplimiento</h2>
+<table style="width:99%;">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 30%" />
+<col style="width: 23%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr>
+<th>Indicador</th>
+<th style="text-align: right;">Peso</th>
+<th>Evidencias</th>
+<th>Resultado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CHECK-01 — Maneja instrucciones para la navegación en Docker</td>
+<td style="text-align: right;">30%</td>
+<td>EVID-03, EVID-04, EVID-07, EVID-09, EVID-13</td>
+<td><strong>CUMPLE</strong></td>
+</tr>
+<tr>
+<td>CHECK-02 — Maneja los conceptos de contenedores</td>
+<td style="text-align: right;">30%</td>
+<td>EVID-01, EVID-04, EVID-09 + explicaciones
+(imagen/contenedor/Dockerfile/registry/engine/puerto/host)</td>
+<td><strong>CUMPLE</strong></td>
+</tr>
+<tr>
+<td>CHECK-03 — Genera con éxito la imagen</td>
+<td style="text-align: right;">10%</td>
+<td>EVID-05, EVID-06, EVID-07</td>
+<td><strong>CUMPLE</strong></td>
+</tr>
+<tr>
+<td>CHECK-04 — Genera la aplicación y el entorno de desarrollo</td>
+<td style="text-align: right;">15%</td>
+<td>EVID-02, EVID-08, EVID-10</td>
+<td><strong>CUMPLE</strong></td>
+</tr>
+<tr>
+<td>CHECK-05 — Modifica con éxito la aplicación del contenedor</td>
+<td style="text-align: right;">15%</td>
+<td>EVID-11, EVID-12, EVID-13, EVID-14, EVID-15</td>
+<td><strong>CUMPLE</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Los identificadores corresponden a evidencias reales registradas en
+<code>metadata/evidence-index.json</code>.</p>
+<h2 id="resultados-obtenidos">21. Resultados obtenidos</h2>
+<ol type="1">
+<li>Entorno Docker operativo verificado (Engine 29.7.2, Compose
+v5.3.1).</li>
+<li>Imagen <code>getting-started</code> construida desde un Dockerfile
+propio (Node 22 Alpine).</li>
+<li>Contenedor ejecutándose con la aplicación accesible en
+<code>http://localhost:3000</code>.</li>
+<li>Funcionalidad CRUD comprobada (crear, listar, completar,
+eliminar).</li>
+<li>Código modificado (<code>app.js:56</code>), imagen reconstruida
+(nuevo ID) y contenedor reemplazado.</li>
+<li>Cambio visible en la aplicación final (prueba de extremo a
+extremo).</li>
+<li>Verificación automatizada: 7/7 pruebas exitosas.</li>
+<li>Paquete de evidencias y documentación trazable generado.</li>
+</ol>
+<h2 id="conclusiones">22. Conclusiones</h2>
+<ul>
+<li><strong>Aprendizaje.</strong> Se comprendió de forma práctica el
+ciclo de vida de una aplicación en contenedores: código fuente →
+Dockerfile → imagen → contenedor → puerto → aplicación.</li>
+<li><strong>Uso de Docker.</strong> Se emplearon comandos de navegación
+y gestión (<code>docker build</code>, <code>image ls</code>,
+<code>run</code>, <code>ps</code>, <code>port</code>, <code>logs</code>,
+<code>stop</code>, <code>rm</code>) sobre una aplicación real.</li>
+<li><strong>Imagen vs. contenedor.</strong> La imagen es una plantilla
+inmutable; el contenedor es su instancia en ejecución. Reconstruir una
+imagen <strong>no</strong> cambia el contenedor en marcha: fue necesario
+detener y eliminar el anterior y crear uno nuevo.</li>
+<li><strong>Importancia del Dockerfile.</strong> Define de forma
+reproducible cómo se construye la imagen; separarlo del código (con
+<code>-f</code>) mantiene el proyecto ordenado.</li>
+<li><strong>Aislamiento.</strong> El contenedor encapsula runtime y
+dependencias, evitando conflictos con el sistema (por ejemplo, la
+versión de Node del host, v24, no afectó a la imagen, Node 22).</li>
+<li><strong>Mapeo de puertos.</strong> <code>-p 3000:3000</code> conecta
+el host con el contenedor; sin él, la aplicación sería inaccesible desde
+el navegador, y el mismo puerto no puede publicarse dos veces.</li>
+<li><strong>Modificación y reconstrucción.</strong> El cambio en
+<code>app.js</code> sólo llegó a producción al reconstruir la imagen y
+reemplazar el contenedor, evidenciando la trazabilidad del
+despliegue.</li>
+<li><strong>Relación con infraestructura tecnológica.</strong> Este
+proceso es la base de una plataforma de despliegue: imágenes
+versionadas, contenedores aislados, puertos controlados y verificación
+automatizada, alineados con el resultado de aprendizaje
+<strong>220501086-02</strong>.</li>
+</ul>
+<h2 id="anexos">23. Anexos</h2>
+<ul>
+<li><strong>Anexo A. Registro de comandos:</strong>
+<code>metadata/commands.log</code>.</li>
+<li><strong>Anexo B. Índice de evidencias:</strong>
+<code>metadata/evidence-index.json</code>.</li>
+<li><strong>Anexo C. Estado del proyecto:</strong>
+<code>metadata/project-state.json</code>.</li>
+<li><strong>Anexo D. Lista de chequeo:</strong>
+<code>metadata/checklist.json</code>.</li>
+<li><strong>Anexo E. Script de verificación:</strong>
+<code>scripts/verify.sh</code> y su salida en
+<code>logs/final-verification.log</code>.</li>
+<li><strong>Anexo F. Evidencias de terminal:</strong> carpeta
+<code>evidencias/</code>.</li>
+<li><strong>Anexo G. Capturas manuales (aportadas por el
+aprendiz):</strong> pendientes de inserción — capturas de Docker Desktop
+y del navegador en <code>http://localhost:3000</code> (estado vacío
+modificado). <em>No se generan capturas sintéticas.</em></li>
+</ul>
+</body>
+</html>

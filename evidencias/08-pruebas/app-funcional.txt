@@ -1,0 +1,46 @@
+================================================================
+EVID-10 | FASE 08 | Verificación funcional de la aplicación
+Fecha: 2026-10-07 23:33:58 -05
+URL: http://localhost:3000
+================================================================
+== 1) GET / (interfaz HTML) ==
+HTTP 200 | 858 bytes | content-type=text/html; charset=utf-8
+Titulo de la pagina:
+<title>Todo App</title>
+
+== 2) GET /items (estado inicial, debe estar vacio) ==
+[]
+HTTP 200
+
+== 3) POST /items (crear tarea) ==
+{"id":"1ea43337-ec2e-4439-914c-1b0de2bb7352","name":"Estudiar Docker","completed":false}
+HTTP 200
+
+== 4) POST /items (crear segunda tarea) ==
+{"id":"65d77ccf-e946-4b7b-8207-bfc9cff49701","name":"Desplegar contenedor","completed":false}
+HTTP 200
+
+== 5) GET /items (listar) ==
+[{"id":"1ea43337-ec2e-4439-914c-1b0de2bb7352","name":"Estudiar Docker","completed":false},{"id":"65d77ccf-e946-4b7b-8207-bfc9cff49701","name":"Desplegar contenedor","completed":false}]
+HTTP 200
+
+== 6) PUT /items/:id (marcar como completada) ==
+{"id":"1ea43337-ec2e-4439-914c-1b0de2bb7352","name":"Estudiar Docker","completed":true}
+HTTP 200
+
+== 7) GET /items (comprobar estado completado) ==
+[{"id":"1ea43337-ec2e-4439-914c-1b0de2bb7352","name":"Estudiar Docker","completed":true},{"id":"65d77ccf-e946-4b7b-8207-bfc9cff49701","name":"Desplegar contenedor","completed":false}]
+HTTP 200
+
+== 8) DELETE /items/:id (eliminar) ==
+OKHTTP 200
+
+== 9) DELETE segundo item y limpieza para dejar estado vacio ==
+OKHTTP 200
+
+== 10) GET /items (estado final debe ser []) ==
+[]
+HTTP 200
+
+== 11) Verificar cadena SIN modificar en app.js servido ==
+56:                <p className="text-center">No items yet! Add one above!</p>

@@ -1,0 +1,28 @@
+================================================================
+EVID-14/15 | FASE 12 | Nuevo contenedor con la aplicación modificada
+Fecha: 2026-10-07 23:34:24 -05
+Comando: docker run -dp 3000:3000 --name getting-started getting-started
+================================================================
+ba5968cb3faadc707df7099e6575dd6be4dc8ce4cb84aed07d26f54111a3cf2a
+
+$ docker ps
+CONTAINER ID   IMAGE             COMMAND                  CREATED         STATUS         PORTS                                         NAMES
+ba5968cb3faa   getting-started   "docker-entrypoint.s…"   3 seconds ago   Up 3 seconds   0.0.0.0:3000->3000/tcp, [::]:3000->3000/tcp   getting-started
+
+$ docker logs getting-started
+Using sqlite database at /etc/todos/todo.db
+Listening on port 3000
+
+== Verificar modificación en app.js servido por el contenedor ==
+$ curl -s http://localhost:3000/js/app.js | grep -n 'elementos pendientes'
+56:                <p className="text-center">¡Aún no tienes elementos pendientes! ¡Agrega uno arriba!</p>
+
+== Comprobar que la cadena ANTIGUA ya NO existe ==
+OK: cadena antigua eliminada
+
+== HTTP de la aplicación ==
+GET / -> HTTP 200
+GET /items -> HTTP 200
+
+== Estado items (vacío para mostrar el mensaje) ==
+[]

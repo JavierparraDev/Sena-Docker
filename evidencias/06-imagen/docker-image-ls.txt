@@ -1,0 +1,48 @@
+================================================================
+EVID-07 | FASE 06 | Verificación de la imagen creada
+Fecha: 2026-10-07 23:33:45 -05
+Comando: docker image ls getting-started
+================================================================
+$ docker image ls
+IMAGE                                                     ID             DISK USAGE   CONTENT SIZE   EXTRA
+bot-binance-bot-paper:latest                              59a173719444       3.18GB          712MB   U    
+bot-binance-dashboard:latest                              25b2b9f887d0       3.18GB          712MB   U    
+debian:bookworm-slim                                      88200866dfff        116MB         30.6MB        
+docker.n8n.io/n8nio/n8n:latest                            b73045abaddb       1.81GB          284MB   U    
+getting-started:latest                                    70d582dbf294        314MB         81.5MB        
+hadolint/hadolint:latest-alpine                           a1d49ae1a4e8       80.8MB         16.1MB        
+indifferentbroccoli/projectzomboid-server-docker:latest   8e13816b92fd        375MB          108MB        
+javier0parra/pz-server-docker:latest                      102d25abfbba        375MB          108MB        
+postgres:17-alpine                                        d4bb0a8c1b7b        424MB          118MB        
+pz-fork-test:latest                                       92dfa302588a        375MB          108MB        
+redis:7-alpine                                            e7723ff73d96       57.8MB         16.8MB        
+techrepair-render-test:latest                             f0ad02d20e0c       1.08GB          270MB        
+techrepair/app:dev                                        310c60635d59       1.15GB          307MB        
+techrepair/frontend:dev                                   5e23b93a8251        605MB          153MB        
+techrepair/nginx:dev                                      2104458cb0e1       73.6MB           21MB        
+
+$ docker image ls getting-started
+IMAGE                    ID             DISK USAGE   CONTENT SIZE   EXTRA
+getting-started:latest   70d582dbf294        314MB         81.5MB        
+
+---- Inspeccion detallada ----
+$ docker image inspect getting-started --format '{{.Id}} {{.Created}} {{.Size}} {{.Architecture}}/{{.Os}}'
+ID=sha256:70d582dbf29439c47e144692f779f7d385669e4ed91a896c6b06bb35866dc434|Created=2026-10-08T04:33:40.387616992Z|Size=81508381 bytes|Arch=amd64/linux
+
+$ docker history getting-started
+IMAGE          CREATED         CREATED BY                                      SIZE      COMMENT
+70d582dbf294   5 seconds ago   CMD ["node" "src/index.js"]                     0B        buildkit.dockerfile.v0
+<missing>      5 seconds ago   EXPOSE [3000/tcp]                               0B        buildkit.dockerfile.v0
+<missing>      5 seconds ago   COPY . . # buildkit                             6.51MB    buildkit.dockerfile.v0
+<missing>      5 seconds ago   RUN /bin/sh -c npm ci --omit=dev # buildkit     49.3MB    buildkit.dockerfile.v0
+<missing>      9 seconds ago   COPY package.json package-lock.json ./ # bui…   135kB     buildkit.dockerfile.v0
+<missing>      9 seconds ago   WORKDIR /app                                    8.19kB    buildkit.dockerfile.v0
+<missing>      2 weeks ago     CMD ["node"]                                    0B        buildkit.dockerfile.v0
+<missing>      2 weeks ago     ENTRYPOINT ["docker-entrypoint.sh"]             0B        buildkit.dockerfile.v0
+<missing>      2 weeks ago     COPY docker-entrypoint.sh /usr/local/bin/ # …   20.5kB    buildkit.dockerfile.v0
+<missing>      2 weeks ago     RUN /bin/sh -c apk add --no-cache --virtual …   5.48MB    buildkit.dockerfile.v0
+<missing>      2 weeks ago     ENV YARN_VERSION=1.22.22                        0B        buildkit.dockerfile.v0
+<missing>      2 weeks ago     RUN /bin/sh -c addgroup -g 1000 node     && …   162MB     buildkit.dockerfile.v0
+<missing>      2 weeks ago     ENV NODE_VERSION=22.23.3                        0B        buildkit.dockerfile.v0
+<missing>      2 weeks ago     CMD ["/bin/sh"]                                 0B        buildkit.dockerfile.v0
+<missing>      2 weeks ago     ADD alpine-minirootfs-3.24.2-x86_64.tar.gz /…   9.08MB    buildkit.dockerfile.v0

@@ -1,0 +1,40 @@
+================================================================
+EVID-01 | FASE 00 | Diagnóstico del equipo
+Fecha: 2026-10-07 23:33:01 -05
+================================================================
+== Sistema operativo (WSL2) ==
+Linux JavierDev 6.18.33.2-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Thu Jun 18 21:54:43 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+
+== Distribución ==
+PRETTY_NAME="Ubuntu 24.04.4 LTS"
+
+== Arquitectura ==
+x86_64
+
+== CPU ==
+CPU(s):                                  16
+Model name:                              12th Gen Intel(R) Core(TM) i7-12650H
+
+== Memoria RAM ==
+               total        used        free      shared  buff/cache   available
+Mem:           7.6Gi       1.7Gi       1.4Gi        49Mi       4.8Gi       5.9Gi
+Swap:          2.0Gi          0B       2.0Gi
+
+== Almacenamiento ==
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sdd       1007G   23G  933G   3% /
+
+== Git ==
+git version 2.43.0
+
+== Node.js ==
+v24.19.0
+
+== npm ==
+11.17.0
+
+== VS Code ==
+1.139.1
+
+== Docker CLI (host Windows via WSL) ==
+Docker version 29.7.2, build a7dcaa6

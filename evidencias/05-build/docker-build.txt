@@ -1,0 +1,113 @@
+================================================================
+EVID-06 | FASE 05 | docker build
+Fecha: 2026-10-07 23:33:29 -05
+Comando: docker build -f docker/Dockerfile -t getting-started app/getting-started-app
+================================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.03kB done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/node:22-alpine
+#2 ...
+
+#3 [auth] library/node:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/node:22-alpine
+#2 DONE 2.8s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 64B done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 6.32MB 0.0s done
+#5 DONE 0.1s
+
+#6 [1/5] FROM docker.io/library/node:22-alpine@sha256:0a7108bf6c7bf5de370ffb1a3ed6be93d405b43ff159f681a8d18c0e2bc2e402
+#6 resolve docker.io/library/node:22-alpine@sha256:0a7108bf6c7bf5de370ffb1a3ed6be93d405b43ff159f681a8d18c0e2bc2e402 0.1s done
+#6 DONE 0.2s
+
+#6 [1/5] FROM docker.io/library/node:22-alpine@sha256:0a7108bf6c7bf5de370ffb1a3ed6be93d405b43ff159f681a8d18c0e2bc2e402
+#6 sha256:d39db1cf9caa4f49c5a2e67111fbe6e0d5eea8ede550cb82f3dc2b79712688d6 447B / 447B 0.1s done
+#6 sha256:e554276b05e6306c5ad33cd85bfa7f0693083e21f6114db5abf60a20fb413039 0B / 1.26MB 0.2s
+#6 sha256:f7f2d304681aaa935c9cfd180850cf616ae843efce7682873d6521ded7268937 0B / 55.59MB 0.2s
+#6 sha256:e554276b05e6306c5ad33cd85bfa7f0693083e21f6114db5abf60a20fb413039 1.26MB / 1.26MB 0.4s done
+#6 sha256:e2de96513ba9eb53b431787ec8a65cdde380ac4772a3e4c4b714dcfde2a102b5 0B / 3.85MB 0.2s
+#6 sha256:e2de96513ba9eb53b431787ec8a65cdde380ac4772a3e4c4b714dcfde2a102b5 3.85MB / 3.85MB 0.4s done
+#6 extracting sha256:e2de96513ba9eb53b431787ec8a65cdde380ac4772a3e4c4b714dcfde2a102b5 0.1s done
+#6 sha256:f7f2d304681aaa935c9cfd180850cf616ae843efce7682873d6521ded7268937 5.24MB / 55.59MB 0.6s
+#6 sha256:f7f2d304681aaa935c9cfd180850cf616ae843efce7682873d6521ded7268937 9.44MB / 55.59MB 0.8s
+#6 sha256:f7f2d304681aaa935c9cfd180850cf616ae843efce7682873d6521ded7268937 12.58MB / 55.59MB 0.9s
+#6 sha256:f7f2d304681aaa935c9cfd180850cf616ae843efce7682873d6521ded7268937 17.83MB / 55.59MB 1.1s
+#6 sha256:f7f2d304681aaa935c9cfd180850cf616ae843efce7682873d6521ded7268937 22.02MB / 55.59MB 1.2s
+#6 sha256:f7f2d304681aaa935c9cfd180850cf616ae843efce7682873d6521ded7268937 26.21MB / 55.59MB 1.4s
+#6 sha256:f7f2d304681aaa935c9cfd180850cf616ae843efce7682873d6521ded7268937 30.41MB / 55.59MB 1.5s
+#6 sha256:f7f2d304681aaa935c9cfd180850cf616ae843efce7682873d6521ded7268937 34.60MB / 55.59MB 1.7s
+#6 sha256:f7f2d304681aaa935c9cfd180850cf616ae843efce7682873d6521ded7268937 37.75MB / 55.59MB 1.8s
+#6 sha256:f7f2d304681aaa935c9cfd180850cf616ae843efce7682873d6521ded7268937 42.99MB / 55.59MB 2.0s
+#6 sha256:f7f2d304681aaa935c9cfd180850cf616ae843efce7682873d6521ded7268937 46.14MB / 55.59MB 2.1s
+#6 sha256:f7f2d304681aaa935c9cfd180850cf616ae843efce7682873d6521ded7268937 50.33MB / 55.59MB 2.3s
+#6 sha256:f7f2d304681aaa935c9cfd180850cf616ae843efce7682873d6521ded7268937 54.53MB / 55.59MB 2.4s
+#6 sha256:f7f2d304681aaa935c9cfd180850cf616ae843efce7682873d6521ded7268937 55.59MB / 55.59MB 2.5s done
+#6 extracting sha256:f7f2d304681aaa935c9cfd180850cf616ae843efce7682873d6521ded7268937
+#6 extracting sha256:f7f2d304681aaa935c9cfd180850cf616ae843efce7682873d6521ded7268937 0.9s done
+#6 DONE 3.8s
+
+#6 [1/5] FROM docker.io/library/node:22-alpine@sha256:0a7108bf6c7bf5de370ffb1a3ed6be93d405b43ff159f681a8d18c0e2bc2e402
+#6 extracting sha256:e554276b05e6306c5ad33cd85bfa7f0693083e21f6114db5abf60a20fb413039 0.0s done
+#6 extracting sha256:d39db1cf9caa4f49c5a2e67111fbe6e0d5eea8ede550cb82f3dc2b79712688d6 0.0s done
+#6 DONE 3.8s
+
+#7 [2/5] WORKDIR /app
+#7 DONE 0.2s
+
+#8 [3/5] COPY package.json package-lock.json ./
+#8 DONE 0.1s
+
+#9 [4/5] RUN npm ci --omit=dev
+#9 1.624 npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+#9 1.669 npm warn deprecated npmlog@6.0.2: This package is no longer supported.
+#9 2.024 npm warn deprecated are-we-there-yet@3.0.1: This package is no longer supported.
+#9 2.156 npm warn deprecated @npmcli/move-file@1.1.2: This functionality has been moved to @npmcli/fs
+#9 2.179 npm warn deprecated gauge@4.0.4: This package is no longer supported.
+#9 3.434 
+#9 3.434 added 244 packages, and audited 245 packages in 3s
+#9 3.434 
+#9 3.434 49 packages are looking for funding
+#9 3.434   run `npm fund` for details
+#9 3.444 
+#9 3.444 19 vulnerabilities (3 low, 4 moderate, 10 high, 2 critical)
+#9 3.444 
+#9 3.444 To address issues that do not require attention, run:
+#9 3.444   npm audit fix
+#9 3.444 
+#9 3.444 To address all issues (including breaking changes), run:
+#9 3.444   npm audit fix --force
+#9 3.444 
+#9 3.444 Run `npm audit` for details.
+#9 3.445 npm notice
+#9 3.445 npm notice New major version of npm available! 10.9.9 -> 12.2.0
+#9 3.445 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+#9 3.445 npm notice To update run: npm install -g npm@12.2.0
+#9 3.445 npm notice
+#9 DONE 3.6s
+
+#10 [5/5] COPY . .
+#10 DONE 0.1s
+
+#11 exporting to image
+#11 exporting layers
+#11 exporting layers 1.1s done
+#11 exporting manifest sha256:5ce2716732799827d59de0f059395d17c16d755814abdbf84386dd3a519fdd10 0.0s done
+#11 exporting config sha256:58e37c2ba003f71de60e3064c5238ed7c1ca8048cc16d3d3a43dd2e4b92020ab 0.0s done
+#11 exporting attestation manifest sha256:d383cb28c21aae61874783808c0c9c81a8cb3980fa7667f9ce6f6099db31a4b9 0.0s done
+#11 exporting manifest list sha256:70d582dbf29439c47e144692f779f7d385669e4ed91a896c6b06bb35866dc434
+#11 exporting manifest list sha256:70d582dbf29439c47e144692f779f7d385669e4ed91a896c6b06bb35866dc434 0.0s done
+#11 naming to docker.io/library/getting-started:latest done
+#11 unpacking to docker.io/library/getting-started:latest
+#11 unpacking to docker.io/library/getting-started:latest 0.7s done
+#11 DONE 2.0s
+EXIT=0

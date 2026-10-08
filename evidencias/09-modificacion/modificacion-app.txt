@@ -1,0 +1,25 @@
+================================================================
+EVID-11 | FASE 09 | Modificación del código de la aplicación
+Fecha: 2026-10-07 23:34:10 -05
+Archivo: app/getting-started-app/src/static/js/app.js
+Línea:   56
+Valor anterior: No items yet! Add one above!
+Valor nuevo:    ¡Aún no tienes elementos pendientes! ¡Agrega uno arriba!
+================================================================
+== git diff ==
+diff --git a/src/static/js/app.js b/src/static/js/app.js
+index 4ec962c..c1e3a44 100644
+--- a/src/static/js/app.js
++++ b/src/static/js/app.js
+@@ -53,7 +53,7 @@ function TodoListCard() {
+         <React.Fragment>
+             <AddItemForm onNewItem={onNewItem} />
+             {items.length === 0 && (
+-                <p className="text-center">No items yet! Add one above!</p>
++                <p className="text-center">¡Aún no tienes elementos pendientes! ¡Agrega uno arriba!</p>
+             )}
+             {items.map(item => (
+                 <ItemDisplay
+
+== Línea 56 actual ==
+                <p className="text-center">¡Aún no tienes elementos pendientes! ¡Agrega uno arriba!</p>

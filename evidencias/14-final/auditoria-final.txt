@@ -1,0 +1,34 @@
+===============================================================
+AA2-EV02 | FASE 15 | Auditoría final de evidencias
+Fecha: 2026-10-07 23:36 (America/Bogota)
+===============================================================
+
+[x] Docker instalado            -> Docker version 29.7.2
+[x] Docker Engine funcionando   -> docker info OK (overlayfs, x86_64, 16 CPU)
+[x] Dockerfile creado           -> docker/Dockerfile (FROM node:22-alpine)
+[x] Imagen creada               -> getting-started:latest
+[x] Imagen visible (image ls)   -> ID inicial 70d582dbf294 / ID final 3346675b07f4
+[x] Contenedor creado           -> 050918f28eba (v1) / ba5968cb3faa (v2)
+[x] Contenedor ejecutándose     -> docker ps: Up, 0.0.0.0:3000->3000/tcp
+[x] Puerto 3000 mapeado         -> docker port: 3000/tcp -> 0.0.0.0:3000
+[x] Aplicación accesible        -> curl http://localhost:3000/ -> HTTP 200
+[x] Aplicación probada (CRUD)   -> POST/PUT/DELETE /items -> HTTP 200
+[x] Código modificado           -> src/static/js/app.js línea 56
+[x] Imagen reconstruida         -> nuevo ID 3346675b07f4
+[x] Contenedor anterior detenido/eliminado -> docker stop/rm 050918f28eba
+[x] Nuevo contenedor ejecutándose          -> ba5968cb3faa
+[x] Modificación visible        -> /js/app.js sirve "¡Aún no tienes elementos pendientes!..."
+[x] Docker Hub                  -> NO REALIZADO (fase opcional)
+[x] Evidencias organizadas      -> evidencias/00-diagnostico .. 14-final
+[x] Capturas legibles           -> evidencia de terminal/HTTP generada (texto real)
+[ ] Capturas navegador/Docker Desktop -> PENDIENTE (las aporta el aprendiz)
+[x] Matriz de evaluación        -> metadata/checklist.json (5/5 CUMPLE)
+[x] Documento final generado    -> documento/AA2-EV02.{md,html,docx,pdf}
+
+Verificación automatizada: scripts/verify.sh -> 7/7 PASS (logs/final-verification.log)
+
+PENDIENTE MANUAL (no se inventan):
+  - SHOT-01: captura terminal docker --version / docker info
+  - SHOT-02: captura Docker Desktop (Images / Containers)
+  - SHOT-03: captura navegador http://localhost:3000 (app funcionando)
+  - SHOT-04: captura navegador con el texto modificado

@@ -1,0 +1,88 @@
+# Registro de comandos — AA2-EV02
+# Formato: [FASE] comando | RESULTADO | DETALLE
+# Nunca se incluyen secretos ni credenciales.
+
+[FASE 00]
+uname -a && arch && lscpu && free -h && df -h /
+RESULTADO: SUCCESS
+DETALLE: Linux WSL2 x86_64 | i7-12650H 16 vCPU | 7.6 GiB RAM | 933 GB libres
+
+[FASE 02]
+docker --version
+RESULTADO: SUCCESS
+DETALLE: Docker version 29.7.2, build a7dcaa6
+
+[FASE 02]
+docker info
+RESULTADO: SUCCESS
+DETALLE: Server 29.7.2 | Docker Desktop | x86_64 | 16 CPU | StorageDriver overlayfs
+
+[FASE 02]
+docker compose version
+RESULTADO: SUCCESS
+DETALLE: Docker Compose version v5.3.1
+
+[FASE 03]
+git clone --depth 1 https://github.com/docker/getting-started-app.git
+RESULTADO: SUCCESS
+DETALLE: commit 6b025fc53bc7b9bef435d6b09bcd1da5a871c9cc
+
+[FASE 04]
+Creación de docker/Dockerfile (FROM node:22-alpine)
+RESULTADO: SUCCESS
+
+[FASE 05]
+docker build -f docker/Dockerfile -t getting-started app/getting-started-app
+RESULTADO: SUCCESS
+DETALLE: imagen getting-started:latest ID 70d582dbf294 (v1, sin modificar)
+
+[FASE 06]
+docker image ls getting-started
+RESULTADO: SUCCESS
+IMAGEN: getting-started:latest 70d582dbf294 (314MB disco / 81.5MB contenido)
+
+[FASE 07]
+docker run -dp 3000:3000 --name getting-started getting-started
+RESULTADO: SUCCESS
+CONTENEDOR: 050918f28eba | puerto 0.0.0.0:3000->3000/tcp
+
+[FASE 07]
+docker logs getting-started
+RESULTADO: SUCCESS
+DETALLE: "Listening on port 3000"
+
+[FASE 08]
+curl http://localhost:3000/ (GET/POST/PUT/DELETE sobre /items)
+RESULTADO: SUCCESS
+DETALLE: CRUD completo verificado (crear, listar, completar, eliminar). HTTP 200.
+
+[FASE 09]
+Edición de src/static/js/app.js línea 56
+RESULTADO: SUCCESS
+ANTES: No items yet! Add one above!
+DESPUES: ¡Aún no tienes elementos pendientes! ¡Agrega uno arriba!
+
+[FASE 10]
+docker build -f docker/Dockerfile -t getting-started app/getting-started-app
+RESULTADO: SUCCESS
+DETALLE: nuevo ID 3346675b07f4 (v2, modificada)
+
+[FASE 11]
+docker stop 050918f28eba && docker rm 050918f28eba
+RESULTADO: SUCCESS
+DETALLE: contenedor anterior eliminado; puerto 3000 liberado
+
+[FASE 12]
+docker run -dp 3000:3000 --name getting-started getting-started
+RESULTADO: SUCCESS
+CONTENEDOR: ba5968cb3faa | modificación visible en /js/app.js línea 56
+
+[FASE 13]
+Docker Hub (publicación)
+RESULTADO: NO REALIZADO
+DETALLE: fase opcional; no requerida por la lista de chequeo
+
+[FASE 14]
+bash scripts/verify.sh
+RESULTADO: SUCCESS
+DETALLE: 7/7 pruebas OK (Docker, Engine, imagen, contenedor, puerto, HTTP 200, modificación)

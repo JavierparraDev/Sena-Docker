@@ -1,0 +1,20 @@
+================================================================
+EVID-13 | FASE 11 | Detener y eliminar el contenedor anterior
+Fecha: 2026-10-07 23:34:19 -05
+Contenedor anterior: 050918f28eba
+================================================================
+== Antes: docker ps ==
+CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS          PORTS                                         NAMES
+050918f28eba   70d582dbf294   "docker-entrypoint.s…"   30 seconds ago   Up 29 seconds   0.0.0.0:3000->3000/tcp, [::]:3000->3000/tcp   getting-started
+
+$ docker stop 050918f28eba
+050918f28eba
+
+$ docker rm 050918f28eba
+050918f28eba
+
+== Después: docker ps (debe estar vacío de getting-started) ==
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+== docker ps -a --filter name=getting-started (debe estar vacío) ==
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES

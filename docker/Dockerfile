@@ -1,0 +1,29 @@
+# =============================================================
+# AA2-EV02 - Dockerfile de la aplicacion "getting-started-app"
+# Aplicacion: Node.js + Express + React (to-do list)
+# Base: node:22-alpine (LTS)
+#   NOTA: el material del SENA referencia "node:12-alpine", que ya
+#   esta fuera de soporte (EOL). Se usa node:22-alpine (LTS vigente)
+#   por compatibilidad con Express 5 y sqlite3 5.x. Ver documento.
+# =============================================================
+
+FROM node:22-alpine
+
+# Directorio de trabajo dentro del contenedor
+WORKDIR /app
+
+# Copiar primero los manifiestos de dependencias.
+# Esto aprovecha la cache de capas: solo se reinstala si cambian.
+COPY package.json package-lock.json ./
+
+# Instalar dependencias (reproducible, sin devDependencies)
+RUN npm ci --omit=dev
+
+# Copiar el resto del codigo fuente de la aplicacion
+COPY . .
+
+# La aplicacion escucha en el puerto 3000 (src/index.js)
+EXPOSE 3000
+
+# Comando de inicio del contenedor
+CMD ["node", "src/index.js"]
