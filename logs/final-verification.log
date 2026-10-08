@@ -1,6 +1,6 @@
 ================================================================
 AA2-EV02 - VERIFICACIÓN FINAL AUTOMATIZADA
-Fecha: 2026-10-07 23:34:41 -05
+Fecha: 2026-10-07 23:37:09 -05
 ================================================================
   [PASS] Docker CLI disponible (Docker version 29.7.2, build a7dcaa6)
   [PASS] Docker Engine responde (docker info)
